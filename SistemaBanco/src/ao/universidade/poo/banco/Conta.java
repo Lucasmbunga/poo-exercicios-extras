@@ -14,16 +14,24 @@ public class Conta {
 
     public double getSaldo() { return saldo; }
 
+    public void setNumero(String numero) {
+        this.numero = numero;
+    }
+
+    public void setSaldo(double saldo) {
+        this.saldo = saldo;
+    }
+
     public void depositar(double valor) {
         if (valor <= 0) throw new IllegalArgumentException("Valor de depósito deve ser positivo");
-        saldo += valor;
+        this.ajustarSaldo(valor);
     }
 
     // método que pode lançar exceção em caso de saldo insuficiente
     public void sacar(double valor) throws SaldoInsuficienteException {
         if (valor <= 0) throw new IllegalArgumentException("Valor de saque deve ser positivo");
         if (saldo < valor) throw new SaldoInsuficienteException("Saldo insuficiente: saldo=" + saldo + ", valor=" + valor);
-        saldo -= valor;
+        this.ajustarSaldo(-valor);
     }
 
     // transferir usa sacar e depositar (reuso de código)
@@ -33,14 +41,18 @@ public class Conta {
         destino.depositar(valor);
     }
 
+    protected void ajustarSaldo(double valor) throws SaldoInsuficienteException {
+        setSaldo(this.getSaldo() + valor);
+    }
     protected void debitar(double valor) throws SaldoInsuficienteException {
         if (valor <= 0) throw new IllegalArgumentException("Valor de debito deve ser positivo");
-        this.saldo -= valor;
+        this.ajustarSaldo(-valor);
     }
     protected void creditar(double valor) throws SaldoInsuficienteException {
         if (valor <= 0) throw new IllegalArgumentException("Valor de Credito deve ser positivo");
-        this.saldo += valor;
+        this.ajustarSaldo(valor);
     }
+
 
     @Override
     public String toString() {

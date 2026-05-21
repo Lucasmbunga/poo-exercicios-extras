@@ -1,6 +1,11 @@
 package ao.universidade.poo.banco;
 
-public class ContaCorrente extends Conta{
+public class ContaCorrente extends Conta implements Tributavel{
+    @Override
+    public void debitarTaxaMensal() {
+        ajustarSaldo(12);
+    }
+
     private double limite; // pode sacar até saldo + limite
 
     public ContaCorrente(String numero, double saldoInicial, double limite) {

@@ -16,13 +16,13 @@ public class ContaPoupanca extends Conta{
     }
 
     public void aplicarRendimento() {
-        saldo += saldo * taxaRendimento;
+        this.ajustarSaldo(this.getSaldo()*taxaRendimento);
     }
 
     // usa o comportamento padrÃ£o de sacar (sem limite)
     @Override
     public String toString() {
-        return String.format("ContaPoupanca %s - Saldo: %.2f - Taxa: %.4f", numero, saldo, taxaRendimento);
+        return String.format("ContaPoupanca %s - Saldo: %.2f - Taxa: %.4f", numero, this.getSaldo(), taxaRendimento);
     }
 
 }
